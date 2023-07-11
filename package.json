@@ -1,0 +1,23 @@
+{
+  "name": "clientregister",
+  "version": "1.0.0",
+  "description": "a node js project to register and save clients datas",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drkedug/clientRegister.git"
+  },
+  "author": "derek eduardo goncalves",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/drkedug/clientRegister/issues"
+  },
+  "homepage": "https://github.com/drkedug/clientRegister#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^5.7.0"
+  }
+}
