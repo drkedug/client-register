@@ -1,18 +1,21 @@
-const { MongoClient } = require('mongodb');
+const mysql = require('mysql');
 
-const uri = 'mongodb+srv://<username>:<password>@64ac5f580790fe0306b1c5c8/<database-name>?retryWrites=true&w=majority';
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+const { 
+  DB_HOST,
+  DB_USER,
+  DB_PASS,
+  DB_NAME,
+} = proccess.env;
 
-async function connect() {
-  try {
-    await client.connect();
-    console.log('Connected to the database');
-  } catch (error) {
-    console.error('Error connecting to the database:', error);
-  }
+const connect = () => {
+  return mysql.createConnection({
+    host     : DB_HOST,
+    user     : DB_USER,
+    password : DB_PASS,
+    database : DB_NAME,
+  });
 }
 
 module.exports = {
   connect,
-  // Add other database-related functions here
 };
