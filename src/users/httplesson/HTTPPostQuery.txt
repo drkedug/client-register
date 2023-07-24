@@ -1,0 +1,7 @@
+HTTP/1.1 POST /get/user?name=gui&test=test&blabl=bla
+Content-Type: application/json
+
+
+req.body == NULL
+
+req.query == {name: gui, test:test}

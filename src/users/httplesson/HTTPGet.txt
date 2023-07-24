@@ -1,0 +1,2 @@
+HTTP/1.1 GET /get/user?name=gui&test=test&blabl=bla
+Content-Type: application/json

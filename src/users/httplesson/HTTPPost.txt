@@ -1,0 +1,8 @@
+HTTP/1.1 POST /post/user
+Content-Type: application/json
+
+{
+  "name": "ze",
+  "cpf": "101.101.101-25",
+  "address": "test"
+}
