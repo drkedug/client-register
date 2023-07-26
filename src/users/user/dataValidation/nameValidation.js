@@ -1,19 +1,29 @@
+const { stringRemoveSpecialCharacters, stringRemoveNumberCharacters, stringCorrectNameCapitalization } = require("../../../utils/utils");
+
 const nameValidation = (name) => {
-  const validationObj = {isString: false, containSpaces: true, isCapitalized: false, hasSpecialCharacters: true};
-
-  if(name && name.typeof === 'string'){
-    validationObj.isString = true;
-
-    const testNameTrim = name.trim();
-    if(name === testNameTrim){
-      validationObj.containSpaces = false;
-    }
-
-    const firstLetter = name.charAt(0);
-    if(firstLetter === firstLetter.toUpperCase()){
-      validationObj
-    }
+  const validationObj = {value: name, isCapitalized: true, containNumbers: false, hasSpecialCharacters: false, isValid: true};
+  let nameMock = stringRemoveNumberCharacters(name);
+  nameMock = stringRemoveSpecialCharacters(nameMock);
+  if(nameMock !== stringCorrectNameCapitalization(nameMock)){
+    validationObj.isCapitalized = false;
+    validationObj.isValid = false;
   }
+
+  nameMock = stringCorrectNameCapitalization(name);
+  nameMock = stringRemoveSpecialCharacters(nameMock);
+  if(nameMock !== stringRemoveNumberCharacters(nameMock)){
+    validationObj.containNumbers = true;
+    validationObj.isValid = false;
+  }
+
+  nameMock = stringRemoveNumberCharacters(name);
+  nameMock = stringCorrectNameCapitalization(nameMock);
+  if(nameMock !== stringRemoveSpecialCharacters(nameMock)){
+    validationObj.hasSpecialCharacters = true;
+    validationObj.isValid = false;
+  }
+
+  return validationObj;
 }
 
 module.exports = { nameValidation };
