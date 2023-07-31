@@ -1,4 +1,4 @@
-const { stringRemoveSpecialCharacters, stringRemoveNumberCharacters, stringCorrectNameCapitalization } = require("../../../utils/utils");
+const { stringRemoveSpecialCharacters, stringRemoveNumberCharacters, stringCorrectNameCapitalization } = require("../utils/utils");
 
 const nameValidation = (name) => {
   const validationObj = {value: name, isCapitalized: true, containNumbers: false, hasSpecialCharacters: false, isValid: true};

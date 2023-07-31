@@ -6,7 +6,8 @@ const bodyValid = {
   birthdate: "15/03/1997",
   cpf: "108.025.759-43",
   address: "Paes Leme 11 ap 1608",
-  profession: "works with the C#"
+  profession: "works with the C#",
+  isValid: true,
 }
 
 const bodyInvalid = {
@@ -15,7 +16,8 @@ const bodyInvalid = {
   birthdate: "quinze março 97",
   cpf: "11111111111",
   address: "Paes Leme 11 ap 1608",
-  profession: "works with the C#"
+  profession: "works with the C#",
+  isValid: false,
 }
 
 describe('dataConstruct', () => {
@@ -45,7 +47,8 @@ describe('dataConstruct', () => {
         isValid: true,
       },
       address: "Paes Leme 11 ap 1608",
-      profession: "works with the C#"
+      profession: "works with the C#",
+      isValid: true,
     }
     const result = dataConstruct(input);
     expect(result).toStrictEqual(expectedOutput);
@@ -77,7 +80,8 @@ describe('dataConstruct', () => {
         isValid: false,
       },
       address: "Paes Leme 11 ap 1608",
-      profession: "works with the C#"
+      profession: "works with the C#",
+      isValid: false,
     }
     const result = dataConstruct(input);
     expect(result).toStrictEqual(expectedOutput);

@@ -1,4 +1,4 @@
-const { dateNormalize } = require("../../../utils/utils");
+const { dateNormalize } = require("../utils/utils");
 
 const birthdateValidation = (birthdate) => {
   const data = {value: birthdate, isValid: false};

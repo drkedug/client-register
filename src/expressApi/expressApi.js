@@ -1,5 +1,6 @@
 const express = require("express");
-const { userValidation } = require("../users/user/userValidation");
+const { dbCreateConnection } = require("../database/dbCreateConnection");
+const { newClient } = require("../users/client/newClient");
 
 expressApi = () => {
   const expressApi = express();
@@ -7,6 +8,8 @@ expressApi = () => {
   expressApi.use(express.json());
 
   const port = 3005;
+
+  const dbClientConnection = dbCreateConnection();
 
   expressApi.listen(port, (err) => {
     if (err) {
@@ -20,16 +23,18 @@ expressApi = () => {
     res.sendStatus(200);
   });
 
-  expressApi.post('/post/user', (req, res) => {
+  expressApi.post('/users', (req, res) => {
     const body = req.body;
-    if(err){
-      throw err;
-    }
-    const validationObj = userValidation(body);
-    if(validationObj.valid){
-      // post to db
+    const client = newClient(body);
+    if(client.isValid){
+
+      dbClientConnection.connect(function(err) {
+        if (err) throw err;
+        console.log("Connected to db!");
+        client.insert(dbClientConnection, res);
+      });
     } else {
-      res.send(validationObj);
+      res.send(client);
     };
   });
 
@@ -38,17 +43,17 @@ expressApi = () => {
     res.send('Hello World');
   });
 
-  expressApi.get(`/user/:id`, (req, res) => {
+  expressApi.get(`/users`, (req, res) => {
     const id = req.params.id;
     //get user in DB by passing the id
-    res.send('HERES THE USER I GOT FROM THE DB');
+    res.send('HERE\'S THE USER I GOT FROM THE DB');
     res.sendStatus(200);
   });
 
-  expressApi.get(`/user/:id`, (req, res) => {
+  expressApi.get(`/users/:id`, (req, res) => {
     const id = req.params.id;
     //get user in DB by passing the id
-    res.send('HERES THE USER I GOT FROM THE DB');
+    res.send(`DB ID`);
     res.sendStatus(200);
   });
 }
