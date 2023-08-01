@@ -1,6 +1,7 @@
 const { nameValidation }      = require('../../dataValidation/nameValidation');
 const { birthdateValidation } = require('../../dataValidation/birthdateValidation');
 const { cpfValidation }       = require('../../dataValidation/cpfValidation');
+const { dbCreateConnection } = require('../../database/dbCreateConnection');
 
 const newClient = (body) => {
   const obj = {};
@@ -20,22 +21,23 @@ const newClient = (body) => {
 
   obj.isValid = (obj.name.isValid && obj.surname.isValid && obj.cpf.isValid && obj.birthdate.isValid);
 
-  obj.insert = (con, res) => {
+  obj.insert = (res) => {
     var sql = "INSERT INTO clientes (nome, sobrenome, cpf, data_nascimento, endereco, profissao)";
     sql += `VALUES("${obj.name.value}", "${obj.surname.value}", "${obj.cpf.value}", "${obj.birthdate.value}", "${obj.address.value}", "${obj.profession.value}")`;
+    const dbClientConnection = dbCreateConnection();
     try {
-      con.query(sql, function (err, result) {
+      dbClientConnection.query(sql, function (err, result) {
         if (err) {
-          res.status(409).send("ERRO AO INSERIR NO BANCO!\n\n" + err);
+          res.status(400).send("ERROR CONNECTING TO DB! " + err);
         } else {
           res.send("CLIENTE INSERIDO COM SUCESSO");
+          console.log("Result: " + result);
         }
-        console.log("Result: " + result);
       });
     } catch (err) {
-      res.status(409).send("ERRO AO INSERIR NO BANCO!\n\n" + err);
+      res.status(400).send("ERRO AO INSERIR NO BANCO! " + err);
     }
-    con.end(function(err) {
+    dbClientConnection.end(function(err) {
       if(err) {
         res.send(err);
       }

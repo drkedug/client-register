@@ -1,7 +1,8 @@
 const express = require("express");
 const { dbCreateConnection } = require("../database/dbCreateConnection");
 const { getAllClients } = require("../users/client/getAllClients");
-const { newClient } = require("../users/client/newClient");
+const { getClient } = require("../users/client/getClient");
+const { postClient } = require("../users/client/postClient");
 
 expressApi = () => {
   const expressApi = express();
@@ -12,47 +13,23 @@ expressApi = () => {
 
   expressApi.listen(port, (err) => {
     if (err) {
-        throw err;
+      throw err;
     }
     console.log('Server started on port ' + port);
   });
 
-  expressApi.post('/users', (req, res) => {
+  expressApi.post('/clients', (req, res) => {
     const body = req.body;
-    const client = newClient(body);
-    if(client.isValid){
-      const dbClientConnection = dbCreateConnection();
-
-      dbClientConnection.connect(function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Connected to db!");
-          client.insert(dbClientConnection, res);
-        }
-      });
-    } else {
-      res.send(client);
-    };
+    postClient(body, res);
   });
 
-  expressApi.get(`/users`, (req, res) => {
-    const dbClientConnection = dbCreateConnection();
-      
-    dbClientConnection.connect(function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Connected to db!");
-        const clients = getAllClients(dbClientConnection, res);
-      }
-    });
+  expressApi.get(`/clients`, (req, res) => {
+    getAllClients(res);
   });
 
-  expressApi.get(`/users/:id`, (req, res) => {
+  expressApi.get(`/clients/:id`, (req, res) => {
     const id = req.params.id;
-    //get user in DB by passing the id
-    res.send('HERE\'S THE USER I GOT FROM THE DB');
+    getClient(id, res);
   });
 }
 
