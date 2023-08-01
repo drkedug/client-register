@@ -26,24 +26,21 @@ const newClient = (body) => {
     try {
       con.query(sql, function (err, result) {
         if (err) {
-          res.send("ERRO AO INSERIR NO BANCO!" + err);
-          res.sendStatus(500);
+          res.status(409).send("ERRO AO INSERIR NO BANCO!\n\n" + err);
         } else {
           res.send("CLIENTE INSERIDO COM SUCESSO");
-          con.end(function(err) {
-            if(err) {
-              res.send(err);
-            }
-            console.log("DB DESCONECTADO COM SUCESSO");
-          });
         }
         console.log("Result: " + result);
       });
     } catch (err) {
-      res.send("ERRO AO INSERIR NO BANCO!" + err);
-      res.sendStatus(500);
+      res.status(409).send("ERRO AO INSERIR NO BANCO!\n\n" + err);
     }
-
+    con.end(function(err) {
+      if(err) {
+        res.send(err);
+      }
+      console.log("DB DESCONECTADO COM SUCESSO");
+    });
   }
 
   return obj;

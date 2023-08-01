@@ -1,4 +1,4 @@
-const { dataConstruct } = require('../dataConstruct');
+const { newClient } = require('../newClient');
 
 const bodyValid = {
   name: "Derek",
@@ -20,7 +20,7 @@ const bodyInvalid = {
   isValid: false,
 }
 
-describe('dataConstruct', () => {
+describe('newClient', () => {
   it('returns data correctly constructed with everything valid', () => {
     const input = bodyValid;
     const expectedOutput = { 
@@ -46,11 +46,12 @@ describe('dataConstruct', () => {
         value: "108.025.759-43",
         isValid: true,
       },
-      address: "Paes Leme 11 ap 1608",
-      profession: "works with the C#",
+      address: {value: "Paes Leme 11 ap 1608"},
+      profession: {value: "works with the C#"},
       isValid: true,
+      insert: expect.any(Function)
     }
-    const result = dataConstruct(input);
+    const result = newClient(input);
     expect(result).toStrictEqual(expectedOutput);
   });
   
@@ -79,11 +80,12 @@ describe('dataConstruct', () => {
         value: "11111111111",
         isValid: false,
       },
-      address: "Paes Leme 11 ap 1608",
-      profession: "works with the C#",
+      address: {value: "Paes Leme 11 ap 1608"},
+      profession: {value: "works with the C#"},
       isValid: false,
+      insert: expect.any(Function)
     }
-    const result = dataConstruct(input);
+    const result = newClient(input);
     expect(result).toStrictEqual(expectedOutput);
   });
 });
