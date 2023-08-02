@@ -1,5 +1,4 @@
 const express = require("express");
-const { dbCreateConnection } = require("../database/dbCreateConnection");
 const { getAllClients } = require("../users/client/getAllClients");
 const { getClient } = require("../users/client/getClient");
 const { postClient } = require("../users/client/postClient");
